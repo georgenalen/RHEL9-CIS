@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-    author: "Sam Doran, Josh Springer, Daniel Shepherd, Bas Meijeri, James Cassell, Mike Renfro, DFed, George Nalen, Mark Bolwell"
-    description: "Apply the RHEL 8 CIS"
+    author: "George Nalen, Mark Bolwell, Dfed"
+    description: "Apply the RHEL 9 CIS"
     company: "MindPoint Group"
     license: MIT
     role_name: rhel9_cis
@@ -16,6 +16,10 @@ galaxy_info:
         - cis
         - hardening
         - benchmark
+        - redhat
+        - compliance
 collections:
   - community.general
+  - community.crypto
+  - ansible.posix
 dependencies: []
