@@ -87,7 +87,7 @@ jobs:
         working-directory: .github/workflows
         id: test_os
         run: |
-          RHEL7=$(grep -c RHEL7 OS.tfvars)
+          RHEL7=$(grep -c RHEL7 OS.tfvars); if [ `echo $?` != 0 ]; then exit 0; fi
           echo "::set-output name=OUTPUT::$RHEL7"
 
       - name: if RHEL7 - Sleep for 60 seconds
