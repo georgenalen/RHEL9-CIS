@@ -82,13 +82,13 @@ jobs:
         run: cat hosts.yml
 
 # Centos 7 images take a while to come up insert sleep or playbook fails
-      
+
       - name: Check if test os is rhel7
         working-directory: .github/workflows
         id: test_os
         run: |
           RHEL7=$(grep -c RHEL7 OS.tfvars); if [ `echo $?` != 0 ]; then exit 0; fi
-          echo "::set-output name=OUTPUT::$RHEL7"
+          echo "::set-output name=RHEL7::$RHEL7"
 
       - name: if RHEL7 - Sleep for 60 seconds
         if: steps.test_os.outputs.RHEL7 >= 1
@@ -112,9 +112,8 @@ jobs:
 
       - name: Terraform_Destroy - if Apply & Playbook Success
         working-directory: .github/workflows
-        if: ${{ steps.Terraform-Apply.outcome }} == 'success' && ${{ steps.Run_Ansible_playbook.outcome }} == 'success'
+        if: ${{ steps.Terraform-Apply.outcome }} == 'success' && ${{ steps.Run_Ansible_playbook.outcome }} == 'success' || ${{ steps.Terraform-Apply.outcome }} != 'success'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          OS_TFVARS: centos7.tfvars
         run: terraform destroy -var-file "OS.tfvars" -var-file "github_vars.tfvars" --auto-approve -input=false
