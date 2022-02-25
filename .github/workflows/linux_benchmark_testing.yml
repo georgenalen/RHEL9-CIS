@@ -113,7 +113,7 @@ jobs:
 
       - name: Terraform_Destroy - if Apply & Playbook Success
         working-directory: .github/workflows
-        if: env.AWS_DESTROY == 'true'
+        if: ${{ env.AWS_DESTROY == 'true' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
