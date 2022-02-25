@@ -109,9 +109,9 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: "false"
           ANSIBLE_DEPRECATION_WARNINGS: "false"
 
-# Remove test system
+# Remove test system - User secrets to keep if necessary
 
-      - name: Terraform_Destroy - if Apply & Playbook Success
+      - name: Terraform_Destroy
         working-directory: .github/workflows
         if: always() && env.ENABLE_DEBUG == 'false'
         env:
