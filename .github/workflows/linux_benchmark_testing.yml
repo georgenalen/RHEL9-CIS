@@ -82,17 +82,19 @@ jobs:
         run: cat hosts.yml
 
 # Centos 7 images take a while to come up insert sleep or playbook fails
+      
       - name: Check if test os is rhel7
         working-directory: .github/workflows
         id: test_os
         run: |
-          RHEL7=$(grep -c RHEL7 OS.tfvars)
+          RHEL7=$(grep -c RHEL7 OS.tfvars); if [ `echo $?` != 0 ]; then exit 0; fi
           echo "::set-output name=OUTPUT::$RHEL7"
 
       - name: if RHEL7 - Sleep for 60 seconds
         if: steps.test_os.outputs.RHEL7 >= 1
         run: sleep 60s
         shell: bash
+
 # Run the ansible playbook
       - name: Run_Ansible_Playbook
         uses: arillso/action.playbook@master
