@@ -86,9 +86,10 @@ jobs:
       - name: Check if test os is rhel7
         working-directory: .github/workflows
         id: test_os
-        run: |
-          RHEL7=$(grep -c RHEL7 OS.tfvars); if [ `echo $?` != 0 ]; then exit 0; fi
-          echo "::set-output name=RHEL7::$RHEL7"
+        run: >-
+          echo "::set-output name=RHEL7::$(
+          grep -c RHEL7 OS.tfvars
+          )"
 
       - name: if RHEL7 - Sleep for 60 seconds
         if: steps.test_os.outputs.RHEL7 >= 1
