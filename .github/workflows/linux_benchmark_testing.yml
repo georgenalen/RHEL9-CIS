@@ -109,11 +109,11 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: "false"
           ANSIBLE_DEPRECATION_WARNINGS: "false"
 
-# Remove test system
+# Remove test system - User secrets to keep if necessary
 
-      - name: Terraform_Destroy - if Apply & Playbook Success
+      - name: Terraform_Destroy
         working-directory: .github/workflows
-        if: ${{ steps.Terraform-Apply.outcome }} == 'success' && ${{ steps.Run_Ansible_playbook.outcome }} == 'success' || ${{ steps.Terraform-Apply.outcome }} != 'success'
+        if: always() && env.ENABLE_DEBUG == 'false'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

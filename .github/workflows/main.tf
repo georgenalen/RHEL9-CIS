@@ -9,8 +9,17 @@ data "aws_vpc" "default" {
   default = true
 }
 
+resource "random_id" "server" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = "${var.ami_id}"
+  }
+
+  byte_length = 8
+}
+
 resource "aws_security_group" "github_actions" {
-  name   = "${var.namespace}-SG"
+  name   = "${var.namespace}-${random_id.server.hex}"
   vpc_id = data.aws_vpc.default.id
 
   ingress {
@@ -68,6 +77,7 @@ resource "local_file" "inventory" {
         setup_audit: true
         run_audit: true
         system_is_ec2: true
+        audit_git_version: devel
     EOF
 }
 
