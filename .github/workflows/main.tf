@@ -10,7 +10,7 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_security_group" "github_actions" {
-  name   = "${var.namespace}-SG"
+  name   = "${var.namespace}-${random_id.server.hex}"
   vpc_id = data.aws_vpc.default.id
 
   ingress {
