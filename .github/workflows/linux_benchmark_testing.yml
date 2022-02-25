@@ -113,7 +113,7 @@ jobs:
 
       - name: Terraform_Destroy - if Apply & Playbook Success
         working-directory: .github/workflows
-        if: ${{ steps.Terraform-Apply.outcome }} == 'success' && ${{ steps.Run_Ansible_playbook.outcome }} == 'success' || ${{ steps.Terraform-Apply.outcome }} != 'success'
+        if: ${{ secrets.AWS_INVESTIGATE }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
