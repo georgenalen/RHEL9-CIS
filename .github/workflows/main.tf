@@ -74,8 +74,8 @@ resource "local_file" "inventory" {
           ansible_host: ${aws_instance.testing_vm.public_ip}
           ansible_user: ${var.ami_username}
       vars:
-        setup_audit: true
-        run_audit: true
+        setup_audit: false
+        run_audit: false
         system_is_ec2: true
         audit_git_version: devel
     EOF
