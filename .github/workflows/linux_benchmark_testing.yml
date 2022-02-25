@@ -116,6 +116,5 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DESTROY: ${{ secrets.AWS_DESTROY }}
-        if: ${{ env.AWS_DESTROY == true }}
+        if: ${{ steps.Terraform-Apply.outcome }} != 'success' || ${{ steps.Run_Ansible_playbook.outcome }} == 'success'
         run: terraform destroy -var-file "OS.tfvars" -var-file "github_vars.tfvars" --auto-approve -input=false
